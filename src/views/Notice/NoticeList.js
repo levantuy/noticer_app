@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
 import NoticeItem from './NoticeItem';
-import Notices from './DataNotices';
 
 class NoticeList extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            notices: Notices.notices,
+        this.state = {            
         };
     }
 
     componentDidMount() {
-        this.setState({ notices: Notices.notices });
+        this.setState({  });
     }
 
     render() {
