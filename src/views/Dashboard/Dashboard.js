@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import NoticeList from '../Notice/NoticeList';
 
 class Dashboard extends Component
 {
@@ -6,7 +7,8 @@ class Dashboard extends Component
     {
         return(
             <div>
-                <p>show content here</p>
+                <h3>List notice</h3>
+                <NoticeList></NoticeList>
             </div>
         );
     }

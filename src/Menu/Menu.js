@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { FormControl, Button, FormGroup, Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 import logo from '../logo.svg';
-import { HashRouter, NavLink, Redirect, Route, Switch } from 'react-router-dom';
+import { HashRouter, Redirect, Route, Switch } from 'react-router-dom';
 import routers from '../routers';
-import User from '../views/User/User';
 
 class Menu extends Component {
     constructor(props) {
