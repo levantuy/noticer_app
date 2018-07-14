@@ -52,7 +52,7 @@ namespace Noticer.Business
         /// Gets the Last User.
         /// </summary>
         /// <value>The Last User.</value>
-        public int LastUser { get; private set; }
+        public string LastUser { get; private set; }
 
         /// <summary>
         /// Maintains metadata about <see cref="LastModefied"/> property.

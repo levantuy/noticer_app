@@ -44,12 +44,24 @@ namespace Noticer.Api.Controllers
         //public IHttpActionResult Add(Int64 noticeId, string title, string content, string url)
         public IHttpActionResult Add(NoticeModel model)
         {
-            var obj = Business.Notice.NewNotice();            
-            obj.NoticeId = model.NoticeId;
-            obj.Title = model.Title;
-            obj.Content = model.Content;
-            obj.Url = model.Url;
-            obj.LastUser = 1;
+            Notice obj;
+            if (model.NoticeId > 0) {
+                obj = Notice.GetNotice(model.NoticeId);
+                obj.Title = model.Title;
+                obj.Content = model.Content;
+                obj.Url = model.Url;
+                obj.LastUser = "admin";
+            } 
+            else
+            {
+                obj = Business.Notice.NewNotice();
+                obj.NoticeId = model.NoticeId;
+                obj.Title = model.Title;
+                obj.Content = model.Content;
+                obj.Url = model.Url;
+                obj.LastUser = "admin";
+            }
+             
             obj.ApplyEdit();
             var temp = obj.Clone();
             obj = temp.Save();

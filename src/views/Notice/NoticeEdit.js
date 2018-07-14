@@ -65,7 +65,7 @@ class NoticeEdit extends Component {
         return (<div>
             <Modal show={this.state.showModal} onHide={this.close}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Modal heading</Modal.Title>
+                    <Modal.Title>Update notice</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form>

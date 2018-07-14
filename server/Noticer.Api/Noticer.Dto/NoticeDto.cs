@@ -42,7 +42,7 @@ namespace Noticer.Dto
         /// Gets or sets the Last User.
         /// </summary>
         /// <value>The Last User.</value>
-        public int LastUser { get; set; }
+        public string LastUser { get; set; }
 
         /// <summary>
         /// Gets or sets the Last Modefied.

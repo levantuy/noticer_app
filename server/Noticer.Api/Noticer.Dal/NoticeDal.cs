@@ -31,7 +31,7 @@ namespace Noticer.Dal
                 using (var cmd = new MySqlCommand("Notice_Get", ctx.Connection))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@NoticeId", noticeId).DbType = DbType.Int64;
+                    cmd.Parameters.AddWithValue("@p_NoticeId", noticeId).DbType = DbType.Int64;
                     var dr = cmd.ExecuteReader();
                     return Fetch(dr);
                 }
@@ -49,7 +49,7 @@ namespace Noticer.Dal
                     notice.Title = dr.GetString("Title");
                     notice.Content = dr.GetString("Content");
                     notice.Url = !dr.IsDBNull("Url") ? dr.GetString("Url") : null;
-                    notice.LastUser = dr.GetInt32("LastUser");
+                    notice.LastUser = dr.GetString("LastUser");
                     notice.LastModefied = !dr.IsDBNull("LastModefied") ? dr.GetSmartDate("LastModefied", true) : null;
                 }
             }
@@ -68,13 +68,13 @@ namespace Noticer.Dal
                 using (var cmd = new MySqlCommand("Notice_Add", ctx.Connection))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@NoticeId", notice.NoticeId).Direction = ParameterDirection.Output;
-                    cmd.Parameters.AddWithValue("@Title", notice.Title).DbType = DbType.String;
-                    cmd.Parameters.AddWithValue("@Content", notice.Content).DbType = DbType.String;
-                    cmd.Parameters.AddWithValue("@Url", notice.Url == null ? (object)DBNull.Value : notice.Url).DbType = DbType.String;
-                    cmd.Parameters.AddWithValue("@LastUser", notice.LastUser).DbType = DbType.Int32;
+                    cmd.Parameters.AddWithValue("@p_NoticeId", notice.NoticeId).Direction = ParameterDirection.Output;
+                    cmd.Parameters.AddWithValue("@p_Title", notice.Title).DbType = DbType.String;
+                    cmd.Parameters.AddWithValue("@p_Content", notice.Content).DbType = DbType.String;
+                    cmd.Parameters.AddWithValue("@p_Url", notice.Url == null ? (object)DBNull.Value : notice.Url).DbType = DbType.String;
+                    cmd.Parameters.AddWithValue("@p_LastUser", notice.LastUser).DbType = DbType.String;
                     cmd.ExecuteNonQuery();
-                    //notice.NoticeId = Convert.ToInt64(cmd.Parameters["@NoticeId"].Value.ToString());
+                    //notice.NoticeId = Convert.ToInt64(cmd.Parameters["@p_NoticeId"].Value.ToString());
                 }
             }
             return notice;
@@ -92,12 +92,11 @@ namespace Noticer.Dal
                 using (var cmd = new MySqlCommand("Notice_Upd", ctx.Connection))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@NoticeId", notice.NoticeId).DbType = DbType.Int64;
-                    cmd.Parameters.AddWithValue("@Title", notice.Title).DbType = DbType.String;
-                    cmd.Parameters.AddWithValue("@Content", notice.Content).DbType = DbType.String;
-                    cmd.Parameters.AddWithValue("@Url", notice.Url == null ? (object)DBNull.Value : notice.Url).DbType = DbType.String;
-                    cmd.Parameters.AddWithValue("@LastUser", notice.LastUser).DbType = DbType.Int32;
-                    cmd.Parameters.AddWithValue("@LastModefied", notice.LastModefied.DBValue).DbType = DbType.DateTime;
+                    cmd.Parameters.AddWithValue("@p_NoticeId", notice.NoticeId).DbType = DbType.Int64;
+                    cmd.Parameters.AddWithValue("@p_Title", notice.Title).DbType = DbType.String;
+                    cmd.Parameters.AddWithValue("@p_Content", notice.Content).DbType = DbType.String;
+                    cmd.Parameters.AddWithValue("@p_Url", notice.Url == null ? (object)DBNull.Value : notice.Url).DbType = DbType.String;
+                    cmd.Parameters.AddWithValue("@p_LastUser", notice.LastUser).DbType = DbType.String;
                     var rowsAffected = cmd.ExecuteNonQuery();
                     if (rowsAffected == 0)
                         throw new DataNotFoundException("Notice");
@@ -117,7 +116,7 @@ namespace Noticer.Dal
                 using (var cmd = new MySqlCommand("Notice_Delete", ctx.Connection))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@NoticeId", noticeId).DbType = DbType.Int64;
+                    cmd.Parameters.AddWithValue("@p_NoticeId", noticeId).DbType = DbType.Int64;
                     var rowsAffected = cmd.ExecuteNonQuery();
                     if (rowsAffected == 0)
                         throw new DataNotFoundException("Notice");

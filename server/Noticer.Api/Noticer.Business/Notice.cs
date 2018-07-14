@@ -80,12 +80,12 @@ namespace Noticer.Business
         /// <summary>
         /// Maintains metadata about <see cref="LastUser"/> property.
         /// </summary>
-        private static readonly PropertyInfo<int> LastUserProperty = RegisterProperty<int>(p => p.LastUser, "Last User");
+        private static readonly PropertyInfo<string> LastUserProperty = RegisterProperty<string>(p => p.LastUser, "Last User");
         /// <summary>
         /// Gets or sets the Last User.
         /// </summary>
         /// <value>The Last User.</value>
-        public int LastUser
+        public string LastUser
         {
             get { return GetProperty(LastUserProperty); }
             set { SetProperty(LastUserProperty, value); }

@@ -58,7 +58,7 @@ namespace Noticer.Dal
             noticeInfo.Title = dr.GetString("Title");
             noticeInfo.Content = dr.GetString("Content");
             noticeInfo.Url = !dr.IsDBNull("Url") ? dr.GetString("Url") : null;
-            noticeInfo.LastUser = dr.GetInt32("LastUser");
+            noticeInfo.LastUser = dr.GetString("LastUser");
             noticeInfo.LastModefied = !dr.IsDBNull("LastModefied") ? dr.GetSmartDate("LastModefied", true) : null;
 
             return noticeInfo;

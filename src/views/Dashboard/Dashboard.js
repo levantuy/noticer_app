@@ -13,11 +13,17 @@ class Dashboard extends Component
             noticeId: 0                
         },
         this.showModal = this.showModal.bind(this);
-        this.handleSaveNotice = this.handleSaveNotice.bind(this);     
+        this.handleSaveNotice = this.handleSaveNotice.bind(this);    
+        this.handleEdit = this.handleEdit.bind(this); 
     };
 
     showModal() {
-        this.setState({noticeId: 1});
+        this.setState({noticeId: 0});
+        this.refs.modal.setState({
+            value: '',
+            content: '',
+            url: ''
+        });
         this.refs.modal.open();     
     }
 
@@ -49,6 +55,16 @@ class Dashboard extends Component
             });
     }
 
+    handleEdit(item){
+        this.setState({noticeId: item.NoticeId});
+        this.refs.modal.setState({
+            value: item.Title,
+            content: item.Content,
+            url: item.Content
+        });
+        this.refs.modal.open();   
+    };
+
     render()
     {
         return(
@@ -58,7 +74,7 @@ class Dashboard extends Component
                     <Button className="btn btn-primary" onClick={this.showModal}>Add</Button>
                 </div>                
                 <NoticeEdit onAdd={this.handleSaveNotice} ref="modal" NoticeId={this.state.noticeId}></NoticeEdit>
-                <NoticeList ref="noticeList"></NoticeList>
+                <NoticeList ref="noticeList" onEditClick={this.handleEdit}></NoticeList>
             </div>
         );
     }

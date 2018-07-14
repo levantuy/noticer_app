@@ -15,6 +15,7 @@ class NoticeList extends Component {
         };
         this.reloadData = this.reloadData.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
+        this.handleEdit = this.handleEdit.bind(this);
     }
     
     componentDidMount() {
@@ -58,12 +59,18 @@ class NoticeList extends Component {
             .then(function () {
                 // always executed
             });                    
-    }
+    };
+
+    handleEdit(item){
+        if (typeof this.props.onEditClick === 'function') {
+            this.props.onEditClick(item);
+        }
+    };
 
     render() {
        
         const noticeComponent = this.state.result.data.map((notice) => (
-            <NoticeItem onDeleteClick={this.handleDelete} key={notice.NoticeId}
+            <NoticeItem onDeleteClick={this.handleDelete} onEditClick={this.handleEdit} key={notice.NoticeId}
                 NoticeId={notice.NoticeId}
                 Title={notice.Title}
                 Content={notice.Content}
