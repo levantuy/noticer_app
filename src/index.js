@@ -5,5 +5,7 @@ import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 import Menu from './Menu/Menu';
 
+localStorage.setItem("urlApi", 'http://localhost:53875/api/');
+
 ReactDOM.render(<Menu />, document.getElementById('root'));
 registerServiceWorker();

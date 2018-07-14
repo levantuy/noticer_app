@@ -17,10 +17,10 @@ namespace Noticer.Api.Controllers
         public IHttpActionResult Index()
         {
             NoticeColl notices = NoticeColl.GetNoticeColl();
-            List<Noticer.Api.Models.Notice> result = new List<Models.Notice>();
+            List<Noticer.Api.Models.NoticeModel> result = new List<Models.NoticeModel>();
             foreach (var item in notices)
             {
-                result.Add(new Models.Notice
+                result.Add(new Models.NoticeModel
                 {
                     NoticeId = item.NoticeId,
                     Content = item.Content,
@@ -34,6 +34,27 @@ namespace Noticer.Api.Controllers
             return Ok(new
             {
                 data = result,
+                success = "true",
+                message = "success"
+            });
+        }
+
+        [JwtAuthentication]
+        [System.Web.Http.HttpPost]
+        //public IHttpActionResult Add(Int64 noticeId, string title, string content, string url)
+        public IHttpActionResult Add(NoticeModel model)
+        {
+            var obj = Business.Notice.NewNotice();            
+            obj.NoticeId = model.NoticeId;
+            obj.Title = model.Title;
+            obj.Content = model.Content;
+            obj.Url = model.Url;
+            obj.LastUser = 1;
+            obj.ApplyEdit();
+            var temp = obj.Clone();
+            obj = temp.Save();
+            return Ok(new
+            {
                 success = "true",
                 message = "success"
             });

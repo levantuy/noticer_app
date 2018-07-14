@@ -1,47 +1,44 @@
 import React, { Component } from 'react';
 import NoticeItem from './NoticeItem';
+import {getToken} from '../../helpers';
+import axios from 'axios';
 
 class NoticeList extends Component {
     constructor(props) {
         super(props);
-        this.state = {            
+        this.state = {        
+            result:{
+                data:[],
+                success: 'true',
+                message:'success'
+            }    
         };
     }
 
     componentDidMount() {
-        this.setState({  });
+        getToken();
+        // Optionally the request above could also be done as
+        axios.get(localStorage.getItem('urlApi') + 'Notice/index', {
+            params: {
+            },
+            headers: {
+                "Authorization" : 'Bearer ' + localStorage.getItem('token')
+            }
+        })
+            .then((response) => {
+                this.setState({ result: response.data });
+            })
+            .catch(function (error) {
+                // console.log(error);
+            })
+            .then(function () {
+                // always executed
+            }); 
     }
 
     render() {
-
-        const notices = [
-            {
-                NoticeId: 1,
-                Title: 'Yellow Pail',
-                Content: 'On-demand sand castle construction expertise.',
-                Url: '#',
-            },
-            {
-                NoticeId: 2,
-                Title: 'Yellow Pail',
-                Content: 'On-demand sand castle construction expertise.',
-                Url: '#',
-            },
-            {
-                NoticeId: 3,
-                Title: 'Yellow Pail',
-                Content: 'On-demand sand castle construction expertise.',
-                Url: '#',
-            },
-            {
-                NoticeId: 4,
-                Title: 'Yellow Pail',
-                Content: 'On-demand sand castle construction expertise.',
-                Url: '#',
-            },
-        ];
-
-        const noticeComponent = notices.map((notice) => (
+       
+        const noticeComponent = this.state.result.data.map((notice) => (
             <NoticeItem key={notice.NoticeId}
                 NoticeId={'product-' + notice.NoticeId}
                 Title={notice.Title}

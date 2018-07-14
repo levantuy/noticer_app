@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Noticer.Api.Models
 {
-    public class Notice
+    public class NoticeModel
     {
         public Int64 NoticeId { get; set; }
         public string Title { get; set; }

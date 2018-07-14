@@ -32,6 +32,7 @@ namespace Noticer.Business
         public Int64 NoticeId
         {
             get { return GetProperty(NoticeIdProperty); }
+            set { SetProperty(NoticeIdProperty, value); }
         }
 
         /// <summary>

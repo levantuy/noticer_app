@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Button} from 'react-bootstrap';
 
 class NoticeItem extends Component{
     constructor(props) {
@@ -16,6 +17,11 @@ class NoticeItem extends Component{
                 <p>{this.props.Title}</p>
                 <p>{this.props.Content}</p>
                 <a href={this.props.Url}>website</a>
+                <br/>
+                <div className="form-group">
+                    <span><Button className="btn btn-primary">Edit</Button> </span>                    
+                    <Button className="btn btn-primary">Delete</Button>
+                </div>
             </div>
         )
     }

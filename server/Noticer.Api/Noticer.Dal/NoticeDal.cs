@@ -73,9 +73,8 @@ namespace Noticer.Dal
                     cmd.Parameters.AddWithValue("@Content", notice.Content).DbType = DbType.String;
                     cmd.Parameters.AddWithValue("@Url", notice.Url == null ? (object)DBNull.Value : notice.Url).DbType = DbType.String;
                     cmd.Parameters.AddWithValue("@LastUser", notice.LastUser).DbType = DbType.Int32;
-                    cmd.Parameters.AddWithValue("@LastModefied", notice.LastModefied.DBValue).DbType = DbType.DateTime;
                     cmd.ExecuteNonQuery();
-                    notice.NoticeId = (long)cmd.Parameters["@NoticeId"].Value;
+                    //notice.NoticeId = Convert.ToInt64(cmd.Parameters["@NoticeId"].Value.ToString());
                 }
             }
             return notice;
