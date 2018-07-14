@@ -25,8 +25,9 @@ class NoticeList extends Component {
     reloadData(){
         getToken();
         // Optionally the request above could also be done as
-        axios.get(localStorage.getItem('urlApi') + 'Notice/index', {
+        axios.get(localStorage.getItem('urlApi') + 'Notice/search', {
             params: {
+                searchText: ''
             },
             headers: {
                 "Authorization" : 'Bearer ' + localStorage.getItem('token')

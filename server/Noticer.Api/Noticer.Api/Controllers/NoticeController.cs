@@ -43,7 +43,7 @@ namespace Noticer.Api.Controllers
         [System.Web.Http.HttpGet]
         public IHttpActionResult Search(string searchText)
         {
-            NoticeColl notices = NoticeColl.GetNoticeColl(searchText);
+            NoticeColl notices = NoticeColl.GetNoticeColl(searchText == null ? string.Empty : searchText);
             List<Noticer.Api.Models.NoticeModel> result = new List<Models.NoticeModel>();
             foreach (var item in notices)
             {

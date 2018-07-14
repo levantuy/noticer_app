@@ -28,7 +28,7 @@ namespace Noticer.Dal
         {
             using (var ctx = ConnectionManager<MySqlConnection>.GetManager("Connection"))
             {
-                using (var cmd = new MySqlCommand("NoticeColl_Search", ctx.Connection))
+                using (var cmd = new MySqlCommand("Notice_Search", ctx.Connection))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("searchText", searchText);

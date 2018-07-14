@@ -21,7 +21,9 @@ class Menu extends Component {
     };
 
     btnSearchClick() {
-
+        if (typeof this.props.onSearch === 'function') {
+            this.props.onSearch(this.state.searchText);
+        }
     };
 
     render() {
