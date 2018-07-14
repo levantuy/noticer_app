@@ -59,5 +59,29 @@ namespace Noticer.Api.Controllers
                 message = "success"
             });
         }
+
+        [JwtAuthentication]
+        [System.Web.Http.HttpDelete]
+        //public IHttpActionResult Add(Int64 noticeId, string title, string content, string url)
+        public IHttpActionResult Delete(Int64 noticeId)
+        {
+            try
+            {
+                Business.Notice.DeleteNotice(noticeId);
+                return Ok(new
+                {
+                    success = "true",
+                    message = "success"
+                });
+            }
+            catch(Exception ex)
+            {
+                return Ok(new
+                {
+                    success = "false",
+                    message = ex.Message
+                });
+            }            
+        }
     }
 }

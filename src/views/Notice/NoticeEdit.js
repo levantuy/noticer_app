@@ -12,12 +12,12 @@ class NoticeEdit extends Component {
                 content: '',
                 url: ''
             },
-            this.open = this.open.bind(this);
+        this.open = this.open.bind(this);
         this.close = this.close.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleContentChange = this.handleContentChange.bind(this);
         this.handleUrlChange = this.handleUrlChange.bind(this);
-        this.save = this.save.bind(this);
+        this.handleSave = this.handleSave.bind(this);
     }
 
     close() {
@@ -28,31 +28,17 @@ class NoticeEdit extends Component {
         this.setState({ showModal: true });
     };
 
-    save() {
-        getToken();
-        const notice = {
-            NoticeId: this.props.NoticeId,
-            Title: this.state.value,
-            Content: this.state.content,
-            Url: this.state.url
-        };
-        var config = {
-            headers: { "Authorization": 'Bearer ' + localStorage.getItem('token') }
-        };
-        axios.post(
-            localStorage.getItem('urlApi') + 'Notice/add',
-            notice,
-            config
-        )
-            .then((response) => {
-                this.setState({ showModal: false });
-            })
-            .catch(function (error) {
-                // console.log(error);
-            })
-            .then(function () {
-                // always executed
-            });
+    handleSave() {
+        if (typeof this.props.onAdd === 'function') {
+            this.props.onAdd(
+                {
+                    NoticeId: this.props.NoticeId,
+                    Title: this.state.value,
+                    Content: this.state.content,
+                    Url: this.state.url
+                }
+            );
+        }        
     };
 
     getValidationState() {
@@ -106,7 +92,7 @@ class NoticeEdit extends Component {
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={this.save} className="btn btn-primary">Save</Button>
+                    <Button onClick={this.handleSave} className="btn btn-primary">Save</Button>
                     <Button onClick={this.close} className="btn btn-default">Close</Button>
                 </Modal.Footer>
             </Modal>

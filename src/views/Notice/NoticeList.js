@@ -13,9 +13,15 @@ class NoticeList extends Component {
                 message:'success'
             }    
         };
+        this.reloadData = this.reloadData.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
+    }
+    
+    componentDidMount() {
+        this.reloadData();
     }
 
-    componentDidMount() {
+    reloadData(){
         getToken();
         // Optionally the request above could also be done as
         axios.get(localStorage.getItem('urlApi') + 'Notice/index', {
@@ -33,14 +39,32 @@ class NoticeList extends Component {
             })
             .then(function () {
                 // always executed
-            }); 
+            });
+    }
+
+    handleDelete(noticeId){
+        getToken();
+        var config = {
+            headers: { "Authorization": 'Bearer ' + localStorage.getItem('token') }
+        };
+        axios.delete(localStorage.getItem('urlApi') + 'Notice/delete?noticeId=' + noticeId, config)
+            .then((response) => {
+                this.setState({ showModal: false });
+                this.reloadData();
+            })
+            .catch(function (error) {
+                // console.log(error);
+            })
+            .then(function () {
+                // always executed
+            });                    
     }
 
     render() {
        
         const noticeComponent = this.state.result.data.map((notice) => (
-            <NoticeItem key={notice.NoticeId}
-                NoticeId={'product-' + notice.NoticeId}
+            <NoticeItem onDeleteClick={this.handleDelete} key={notice.NoticeId}
+                NoticeId={notice.NoticeId}
                 Title={notice.Title}
                 Content={notice.Content}
                 Url={notice.Url}
