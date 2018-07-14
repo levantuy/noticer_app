@@ -27,6 +27,10 @@ class Dashboard extends Component
         this.refs.modal.open();     
     }
 
+    componentDidMount() {
+        var a = this.props.searchText;
+    }
+
     handleSaveNotice(item){
         getToken();
         const notice = {
@@ -65,8 +69,8 @@ class Dashboard extends Component
         this.refs.modal.open();   
     };
 
-    render()
-    {
+    render(){
+
         return(
             <div>
                 <div className="form-group">

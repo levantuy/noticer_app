@@ -24,6 +24,24 @@ namespace Noticer.Dal
         /// Loads a NoticeColl collection from the database.
         /// </summary>
         /// <returns>A list of <see cref="NoticeDto"/>.</returns>
+        public List<NoticeDto> Fetch(string searchText)
+        {
+            using (var ctx = ConnectionManager<MySqlConnection>.GetManager("Connection"))
+            {
+                using (var cmd = new MySqlCommand("NoticeColl_Search", ctx.Connection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("searchText", searchText);
+                    var dr = cmd.ExecuteReader();
+                    return LoadCollection(dr);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Loads a NoticeColl collection from the database.
+        /// </summary>
+        /// <returns>A list of <see cref="NoticeDto"/>.</returns>
         public List<NoticeDto> Fetch()
         {
             using (var ctx = ConnectionManager<MySqlConnection>.GetManager("Connection"))

@@ -15,6 +15,7 @@ namespace Noticer.Dto
     /// </summary>
     public partial interface INoticeCollDal
     {
+        List<NoticeDto> Fetch(string searchText);
         /// <summary>
         /// Loads a NoticeColl collection from the database.
         /// </summary>

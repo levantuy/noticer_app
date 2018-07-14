@@ -51,6 +51,15 @@ namespace Noticer.Business
         /// Factory method. Loads a <see cref="NoticeColl"/> collection.
         /// </summary>
         /// <returns>A reference to the fetched <see cref="NoticeColl"/> collection.</returns>
+        public static NoticeColl GetNoticeColl(string searchText)
+        {
+            return DataPortal.Fetch<NoticeColl>(searchText);
+        }
+
+        /// <summary>
+        /// Factory method. Loads a <see cref="NoticeColl"/> collection.
+        /// </summary>
+        /// <returns>A reference to the fetched <see cref="NoticeColl"/> collection.</returns>
         public static NoticeColl GetNoticeColl()
         {
             return DataPortal.Fetch<NoticeColl>();
@@ -79,6 +88,22 @@ namespace Noticer.Business
         #endregion
 
         #region Data Access
+
+        /// <summary>
+        /// Loads a <see cref="NoticeColl"/> collection from the database.
+        /// </summary>
+        protected void DataPortal_Fetch(string searchText)
+        {
+            var args = new DataPortalHookArgs();
+            OnFetchPre(args);
+            using (var dalManager = DalFactoryGetManager.GetManager())
+            {
+                var dal = dalManager.GetProvider<INoticeCollDal>();
+                var data = dal.Fetch(searchText);
+                Fetch(data);
+            }
+            OnFetchPost(args);
+        }
 
         /// <summary>
         /// Loads a <see cref="NoticeColl"/> collection from the database.

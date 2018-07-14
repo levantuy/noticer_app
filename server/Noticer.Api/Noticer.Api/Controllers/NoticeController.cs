@@ -40,6 +40,33 @@ namespace Noticer.Api.Controllers
         }
 
         [JwtAuthentication]
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult Search(string searchText)
+        {
+            NoticeColl notices = NoticeColl.GetNoticeColl(searchText);
+            List<Noticer.Api.Models.NoticeModel> result = new List<Models.NoticeModel>();
+            foreach (var item in notices)
+            {
+                result.Add(new Models.NoticeModel
+                {
+                    NoticeId = item.NoticeId,
+                    Content = item.Content,
+                    LastModified = item.LastModefied.ToString("yyyy/MM/dd HH:ss"),
+                    LastUser = item.LastUser,
+                    Title = item.Title,
+                    Url = item.Url
+                });
+            }
+
+            return Ok(new
+            {
+                data = result,
+                success = "true",
+                message = "success"
+            });
+        }
+
+        [JwtAuthentication]
         [System.Web.Http.HttpPost]
         //public IHttpActionResult Add(Int64 noticeId, string title, string content, string url)
         public IHttpActionResult Add(NoticeModel model)
