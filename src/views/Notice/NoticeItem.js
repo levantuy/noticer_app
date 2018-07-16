@@ -71,8 +71,8 @@ class NoticeItem extends Component {
                 <ConfirmMesage onAccept={this.handleAccept} onCancel={this.handleCancel} ref="confirmMessage"></ConfirmMesage>
                 <input type="hidden" value={this.props.NoticeId} />
                 <h4>{this.props.Title}</h4>
-                <p>{this.props.Content}</p>
-                <a href={this.props.Url} className="pull-right">go to link</a>
+                <pre>{this.props.Content}</pre>
+                <a href={this.props.Url} className="pull-right" target="_blank">go to link</a>
                 <br />
                 <div className="form-group">
                     <span><Button className="btn btn-primary" onClick={this.btnEditClick}>Edit</Button> </span>

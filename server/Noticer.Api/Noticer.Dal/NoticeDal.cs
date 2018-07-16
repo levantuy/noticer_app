@@ -87,20 +87,20 @@ namespace Noticer.Dal
         /// <returns>The updated <see cref="NoticeDto"/>.</returns>
         public NoticeDto Update(NoticeDto notice)
         {
-            using (var ctx = ConnectionManager<MySqlConnection>.GetManager("Connection"))
-            {
-                using (var cmd = new MySqlCommand("noticer.t_ins", ctx.Connection))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@p_s1", notice.NoticeId).DbType = DbType.String;
-                    cmd.Parameters["@p_s1"].Direction = ParameterDirection.Input;                    
-                    var rowsAffected = cmd.ExecuteNonQuery();
-                    if (rowsAffected == 0)
-                        throw new DataNotFoundException("Notice");
-                }
-            }
-            return notice;
-            /*
+            //using (var ctx = ConnectionManager<MySqlConnection>.GetManager("Connection"))
+            //{
+            //    using (var cmd = new MySqlCommand("noticer.t_ins", ctx.Connection))
+            //    {
+            //        cmd.CommandType = CommandType.StoredProcedure;
+            //        cmd.Parameters.AddWithValue("@p_s1", notice.NoticeId).DbType = DbType.String;
+            //        cmd.Parameters["@p_s1"].Direction = ParameterDirection.Input;                    
+            //        var rowsAffected = cmd.ExecuteNonQuery();
+            //        if (rowsAffected == 0)
+            //            throw new DataNotFoundException("Notice");
+            //    }
+            //}
+            //return notice;
+
             using (var ctx = ConnectionManager<MySqlConnection>.GetManager("Connection"))
             {
                 using (var cmd = new MySqlCommand("Notice_Upd", ctx.Connection))
@@ -108,7 +108,10 @@ namespace Noticer.Dal
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@p_NoticeId", notice.NoticeId).DbType = DbType.Int64;
                     cmd.Parameters["@p_NoticeId"].Direction = ParameterDirection.Input;
-                    cmd.Parameters.AddWithValue("p_Title", notice.Title);
+                    //MySqlParameter someString = new MySqlParameter("@p_Title", MySqlDbType.VarChar, 255);
+                    //someString.Value = notice.Title;
+                    //cmd.Parameters.Add(someString);
+                    cmd.Parameters.AddWithValue("@p_Title", notice.Title);
                     cmd.Parameters["@p_Title"].Direction = ParameterDirection.Input;
                     cmd.Parameters.AddWithValue("@p_Content", notice.Content);
                     cmd.Parameters["@p_Content"].Direction = ParameterDirection.Input;
@@ -121,7 +124,7 @@ namespace Noticer.Dal
                         throw new DataNotFoundException("Notice");
                 }
             }
-            return notice;             */
+            return notice;
         }
 
         /// <summary>

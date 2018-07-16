@@ -64,7 +64,7 @@ class Dashboard extends Component
         this.refs.modal.setState({
             value: item.Title,
             content: item.Content,
-            url: item.Content
+            url: item.Url
         });
         this.refs.modal.open();   
     };
