@@ -89,20 +89,39 @@ namespace Noticer.Dal
         {
             using (var ctx = ConnectionManager<MySqlConnection>.GetManager("Connection"))
             {
-                using (var cmd = new MySqlCommand("Notice_Upd", ctx.Connection))
+                using (var cmd = new MySqlCommand("noticer.t_ins", ctx.Connection))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@p_NoticeId", notice.NoticeId).DbType = DbType.Int64;
-                    cmd.Parameters.AddWithValue("@p_Title", notice.Title).DbType = DbType.String;
-                    cmd.Parameters.AddWithValue("@p_Content", notice.Content).DbType = DbType.String;
-                    cmd.Parameters.AddWithValue("@p_Url", notice.Url == null ? (object)DBNull.Value : notice.Url).DbType = DbType.String;
-                    cmd.Parameters.AddWithValue("@p_LastUser", notice.LastUser).DbType = DbType.String;
+                    cmd.Parameters.AddWithValue("@p_s1", notice.NoticeId).DbType = DbType.String;
+                    cmd.Parameters["@p_s1"].Direction = ParameterDirection.Input;                    
                     var rowsAffected = cmd.ExecuteNonQuery();
                     if (rowsAffected == 0)
                         throw new DataNotFoundException("Notice");
                 }
             }
             return notice;
+            /*
+            using (var ctx = ConnectionManager<MySqlConnection>.GetManager("Connection"))
+            {
+                using (var cmd = new MySqlCommand("Notice_Upd", ctx.Connection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@p_NoticeId", notice.NoticeId).DbType = DbType.Int64;
+                    cmd.Parameters["@p_NoticeId"].Direction = ParameterDirection.Input;
+                    cmd.Parameters.AddWithValue("p_Title", notice.Title);
+                    cmd.Parameters["@p_Title"].Direction = ParameterDirection.Input;
+                    cmd.Parameters.AddWithValue("@p_Content", notice.Content);
+                    cmd.Parameters["@p_Content"].Direction = ParameterDirection.Input;
+                    cmd.Parameters.AddWithValue("@p_Url", notice.Url);
+                    cmd.Parameters["@p_Url"].Direction = ParameterDirection.Input;
+                    cmd.Parameters.AddWithValue("@p_LastUser", notice.LastUser);
+                    cmd.Parameters["@p_LastUser"].Direction = ParameterDirection.Input;
+                    var rowsAffected = cmd.ExecuteNonQuery();
+                    if (rowsAffected == 0)
+                        throw new DataNotFoundException("Notice");
+                }
+            }
+            return notice;             */
         }
 
         /// <summary>

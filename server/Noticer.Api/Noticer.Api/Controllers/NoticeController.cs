@@ -6,37 +6,51 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Mvc;
 
 namespace Noticer.Api.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class NoticeController : BaseController
     {
         [JwtAuthentication]
         [System.Web.Http.HttpGet]
         public IHttpActionResult Index()
         {
-            NoticeColl notices = NoticeColl.GetNoticeColl();
-            List<Noticer.Api.Models.NoticeModel> result = new List<Models.NoticeModel>();
-            foreach (var item in notices)
+            try
             {
-                result.Add(new Models.NoticeModel
+                NoticeColl notices = NoticeColl.GetNoticeColl();
+                List<Noticer.Api.Models.NoticeModel> result = new List<Models.NoticeModel>();
+                foreach (var item in notices)
                 {
-                    NoticeId = item.NoticeId,
-                    Content = item.Content,
-                    LastModified = item.LastModefied.ToString("yyyy/MM/dd HH:ss"),
-                    LastUser = item.LastUser,
-                    Title = item.Title,
-                    Url = item.Url
+                    result.Add(new Models.NoticeModel
+                    {
+                        NoticeId = item.NoticeId,
+                        Content = item.Content,
+                        LastModified = item.LastModefied.ToString("yyyy/MM/dd HH:ss"),
+                        LastUser = item.LastUser,
+                        Title = item.Title,
+                        Url = item.Url
+                    });
+                }
+
+                return Ok(new
+                {
+                    data = result,
+                    success = "true",
+                    message = "success"
                 });
             }
-
-            return Ok(new
+            catch(Exception ex)
             {
-                data = result,
-                success = "true",
-                message = "success"
-            });
+                return Ok(new
+                {
+                    data = ex.Message,
+                    success = "false",
+                    message = "false"
+                });
+            }            
         }
 
         [JwtAuthentication]
@@ -98,15 +112,15 @@ namespace Noticer.Api.Controllers
                 message = "success"
             });
         }
-
+        
         [JwtAuthentication]
         [System.Web.Http.HttpDelete]
-        //public IHttpActionResult Add(Int64 noticeId, string title, string content, string url)
-        public IHttpActionResult Delete(Int64 noticeId)
+        //[System.Web.Http.RouteAttribute("api/Notice/Delete?id={id}")]
+        public IHttpActionResult Delete(Int64 id)
         {
             try
             {
-                Business.Notice.DeleteNotice(noticeId);
+                Business.Notice.DeleteNotice(id);
                 return Ok(new
                 {
                     success = "true",

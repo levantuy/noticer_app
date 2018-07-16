@@ -24,10 +24,11 @@ class NoticeList extends Component {
 
     reloadData(){
         getToken();
+        var token = localStorage.getItem('token');
         // Optionally the request above could also be done as
-        axios.get(localStorage.getItem('urlApi') + 'Notice/search', {
+        axios.get(localStorage.getItem('urlApi') + 'Notice/index', {
             params: {
-                searchText: ''
+                //searchText: 'a'
             },
             headers: {
                 "Authorization" : 'Bearer ' + localStorage.getItem('token')
@@ -49,7 +50,7 @@ class NoticeList extends Component {
         var config = {
             headers: { "Authorization": 'Bearer ' + localStorage.getItem('token') }
         };
-        axios.delete(localStorage.getItem('urlApi') + 'Notice/delete?noticeId=' + noticeId, config)
+        axios.delete(localStorage.getItem('urlApi') + 'Notice/delete?id=' + noticeId, config)
             .then((response) => {
                 this.setState({ showModal: false });
                 this.reloadData();
