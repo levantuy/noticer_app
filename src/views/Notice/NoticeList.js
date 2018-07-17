@@ -23,44 +23,46 @@ class NoticeList extends Component {
     }
 
     reloadData(){
-        getToken();
-        var token = localStorage.getItem('token');
-        // Optionally the request above could also be done as
-        axios.get(localStorage.getItem('urlApi') + 'Notice/index', {
-            params: {
-                //searchText: 'a'
-            },
-            headers: {
-                "Authorization" : 'Bearer ' + localStorage.getItem('token')
-            }
-        })
-            .then((response) => {
-                this.setState({ result: response.data });
+        getToken(function(){
+            var token = localStorage.getItem('token');
+            // Optionally the request above could also be done as
+            axios.get(localStorage.getItem('urlApi') + 'Notice/index', {
+                params: {
+                    //searchText: 'a'
+                },
+                headers: {
+                    "Authorization" : 'Bearer ' + localStorage.getItem('token')
+                }
             })
-            .catch(function (error) {
-                // console.log(error);
-            })
-            .then(function () {
-                // always executed
-            });
+                .then((response) => {
+                    this.setState({ result: response.data });
+                })
+                .catch(function (error) {
+                    // console.log(error);
+                })
+                .then(function () {
+                    // always executed
+                });
+        });        
     }
 
     handleDelete(noticeId){
-        getToken();
-        var config = {
-            headers: { "Authorization": 'Bearer ' + localStorage.getItem('token') }
-        };
-        axios.delete(localStorage.getItem('urlApi') + 'Notice/delete?id=' + noticeId, config)
-            .then((response) => {
-                this.setState({ showModal: false });
-                this.reloadData();
-            })
-            .catch(function (error) {
-                // console.log(error);
-            })
-            .then(function () {
-                // always executed
-            });                    
+        getToken(function(){
+            var config = {
+                headers: { "Authorization": 'Bearer ' + localStorage.getItem('token') }
+            };
+            axios.delete(localStorage.getItem('urlApi') + 'Notice/delete?id=' + noticeId, config)
+                .then((response) => {
+                    this.setState({ showModal: false });
+                    this.reloadData();
+                })
+                .catch(function (error) {
+                    // console.log(error);
+                })
+                .then(function () {
+                    // always executed
+                });                    
+        });        
     };
 
     handleEdit(item){

@@ -32,31 +32,32 @@ class Dashboard extends Component
     }
 
     handleSaveNotice(item){
-        getToken();
-        const notice = {
-            NoticeId: item.NoticeId,
-            Title: item.Title,
-            Content: item.Content,
-            Url: item.Url
-        };
-        var config = {
-            headers: { "Authorization": 'Bearer ' + localStorage.getItem('token') }
-        };
-        axios.post(
-            localStorage.getItem('urlApi') + 'Notice/add',
-            notice,
-            config
-        )
-            .then((response) => {
-                this.refs.modal.close();
-                this.refs.noticeList.reloadData();
-            })
-            .catch(function (error) {
-                // console.log(error);
-            })
-            .then(function () {
-                // always executed
-            });
+        getToken(function(){
+            const notice = {
+                NoticeId: item.NoticeId,
+                Title: item.Title,
+                Content: item.Content,
+                Url: item.Url
+            };
+            var config = {
+                headers: { "Authorization": 'Bearer ' + localStorage.getItem('token') }
+            };
+            axios.post(
+                localStorage.getItem('urlApi') + 'Notice/add',
+                notice,
+                config
+            )
+                .then((response) => {
+                    this.refs.modal.close();
+                    this.refs.noticeList.reloadData();
+                })
+                .catch(function (error) {
+                    // console.log(error);
+                })
+                .then(function () {
+                    // always executed
+                });
+        });        
     }
 
     handleEdit(item){
