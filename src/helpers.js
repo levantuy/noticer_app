@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export function getToken() {    
     var expirationDate = localStorage.getItem('expirationDate');        
-    if (expirationDate == null || expirationDate == '' || moment().isAfter(expirationDate, 'second')) {
+    if (expirationDate == 'undefined' || expirationDate == null || expirationDate == '' || moment().isAfter(expirationDate, 'second')) {
         // Optionally the request above could also be done as
         axios.get(localStorage.getItem('urlApi') + 'Token', {
             params: {
