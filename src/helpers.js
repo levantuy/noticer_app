@@ -1,8 +1,8 @@
 import moment from 'moment';
 import axios from 'axios';
 
-export function getToken(callback) {    
-    var expirationDate = localStorage.getItem('expirationDate');        
+export function getToken(callback) {
+    var expirationDate = localStorage.getItem('expirationDate');
     if (expirationDate == 'undefined' || expirationDate == null || expirationDate == '' || moment().isAfter(expirationDate, 'second')) {
         // Optionally the request above could also be done as
         axios.get(localStorage.getItem('urlApi') + 'Token', {
@@ -21,6 +21,6 @@ export function getToken(callback) {
             })
             .then(function () {
                 // always executed
-            });            
-    }
-  }
+            });
+    } else callback();
+} 
