@@ -211,6 +211,7 @@
     </Compile>
     <Compile Include="JwtManager.cs" />
     <Compile Include="Models\NoticeModel.cs" />
+    <Compile Include="Models\PostModel.cs" />
     <Compile Include="Models\TokenModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

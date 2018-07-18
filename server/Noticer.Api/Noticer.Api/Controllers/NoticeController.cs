@@ -136,5 +136,40 @@ namespace Noticer.Api.Controllers
                 });
             }            
         }
+
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult GetPosts()
+        {
+            try
+            {
+                var categories = new List<string>();
+                categories.Add("abc");
+                List<PostModel> posts = new List<PostModel>();
+                posts.Add(new PostModel {
+                    authorId = "a",
+                    authorName = "john",
+                    authorUsername = "john le",
+                    categories = categories,
+                    title = "title 1",
+                    _id = "1"
+                });
+
+                return Ok(new
+                {
+                    data = posts,
+                    success = "true",
+                    message = "success"
+                });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new
+                {
+                    data = ex.Message,
+                    success = "false",
+                    message = "false"
+                });
+            }
+        }
     }
 }
