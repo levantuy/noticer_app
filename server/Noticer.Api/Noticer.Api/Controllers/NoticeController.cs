@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace Noticer.Api.Controllers
 {
+    [System.Web.Http.RoutePrefix("api/Notice")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class NoticeController : BaseController
     {
@@ -106,8 +107,26 @@ namespace Noticer.Api.Controllers
             obj.ApplyEdit();
             var temp = obj.Clone();
             obj = temp.Save();
+
+            // reload list
+            var notices = NoticeColl.GetNoticeColl();
+            var result = new List<Models.NoticeModel>();
+            foreach (var item in notices)
+            {
+                result.Add(new Models.NoticeModel
+                {
+                    NoticeId = item.NoticeId,
+                    Content = item.Content,
+                    LastModified = item.LastModefied.ToString("yyyy/MM/dd HH:ss"),
+                    LastUser = item.LastUser,
+                    Title = item.Title,
+                    Url = item.Url
+                });
+            }
+
             return Ok(new
             {
+                data = result,
                 success = "true",
                 message = "success"
             });
@@ -121,8 +140,25 @@ namespace Noticer.Api.Controllers
             try
             {
                 Business.Notice.DeleteNotice(id);
+                // reload list
+                var notices = NoticeColl.GetNoticeColl();
+                var result = new List<Models.NoticeModel>();
+                foreach (var item in notices)
+                {
+                    result.Add(new Models.NoticeModel
+                    {
+                        NoticeId = item.NoticeId,
+                        Content = item.Content,
+                        LastModified = item.LastModefied.ToString("yyyy/MM/dd HH:ss"),
+                        LastUser = item.LastUser,
+                        Title = item.Title,
+                        Url = item.Url
+                    });
+                }
+
                 return Ok(new
                 {
+                    data = result,
                     success = "true",
                     message = "success"
                 });
@@ -137,6 +173,8 @@ namespace Noticer.Api.Controllers
             }            
         }
 
+        [System.Web.Http.Route("~/api/Notice/GetPosts")]
+        [JwtAuthentication]
         [System.Web.Http.HttpGet]
         public IHttpActionResult GetPosts()
         {
